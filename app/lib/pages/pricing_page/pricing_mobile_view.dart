@@ -216,7 +216,7 @@ class PricingMobileView extends HookConsumerWidget {
                 backgroundColor: Colors.blue,
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 10,
+                timeInSecForIosWeb: 5,
                 fontSize: 16.0,
               );
             },
@@ -317,6 +317,8 @@ class PricingMobileView extends HookConsumerWidget {
               right: 0,
               child: Container(
                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.09,
+                margin: const EdgeInsets.all(5.0),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -361,7 +363,7 @@ class PricingMobileView extends HookConsumerWidget {
                               backgroundColor: Colors.blue,
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 10,
+                              timeInSecForIosWeb: 5,
                               fontSize: 16.0,
                             );
                           },
