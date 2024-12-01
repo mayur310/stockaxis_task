@@ -105,7 +105,7 @@ class PricingMobileView extends HookConsumerWidget {
     }
 
     // Update the selected option and pricing data
-    void _updatePricing(String selected, String cardName, int optionNumber) {
+    void updatePricing(String selected, String cardName, int optionNumber) {
       // Update the selection list
       List<Map<String, dynamic>> newSelections =
           List.from(selectedOptions.value);
@@ -216,7 +216,7 @@ class PricingMobileView extends HookConsumerWidget {
                 backgroundColor: Colors.blue,
                 toastLength: Toast.LENGTH_LONG,
                 gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 10,
+                timeInSecForIosWeb: 5,
                 fontSize: 16.0,
               );
             },
@@ -239,7 +239,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Invest in up-trending Smallcap stocks screened through MILARS strategy to generate wealth.",
                       options: littleMastersOptions,
-                      onSelectOption: (selected) => _updatePricing(
+                      onSelectOption: (selected) => updatePricing(
                           selected,
                           "Little Masters",
                           littleMastersOptions.indexOf(selected) + 1),
@@ -252,7 +252,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Generate wealth by riding momentum in Midcap stocks screened through MILARS strategy.",
                       options: emergingMarketLeadersOptions,
-                      onSelectOption: (selected) => _updatePricing(
+                      onSelectOption: (selected) => updatePricing(
                           selected,
                           "Emerging Market Leaders",
                           emergingMarketLeadersOptions.indexOf(selected) + 1),
@@ -265,7 +265,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Achieve stable growth in your portfolio by investing in Bluechip stocks passed through MILARS strategy.",
                       options: largeCapFocusOptions,
-                      onSelectOption: (selected) => _updatePricing(
+                      onSelectOption: (selected) => updatePricing(
                           selected,
                           "Large Cap Focus",
                           largeCapFocusOptions.indexOf(selected) + 1),
@@ -278,7 +278,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Seize opportunities in stocks that are experiencing high volatility and significant movements.",
                       options: stocksOnTheMoveOptions,
-                      onSelectOption: (selected) => _updatePricing(
+                      onSelectOption: (selected) => updatePricing(
                           selected,
                           "Stocks On the Move",
                           stocksOnTheMoveOptions.indexOf(selected) + 1),
@@ -361,7 +361,7 @@ class PricingMobileView extends HookConsumerWidget {
                               backgroundColor: Colors.blue,
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.BOTTOM,
-                              timeInSecForIosWeb: 10,
+                              timeInSecForIosWeb: 5,
                               fontSize: 16.0,
                             );
                           },
