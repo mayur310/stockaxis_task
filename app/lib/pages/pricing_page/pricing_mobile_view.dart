@@ -105,7 +105,7 @@ class PricingMobileView extends HookConsumerWidget {
     }
 
     // Update the selected option and pricing data
-    void updatePricing(String selected, String cardName, int optionNumber) {
+    void _updatePricing(String selected, String cardName, int optionNumber) {
       // Update the selection list
       List<Map<String, dynamic>> newSelections =
           List.from(selectedOptions.value);
@@ -222,14 +222,11 @@ class PricingMobileView extends HookConsumerWidget {
             },
           ),
         ],
-        backgroundColor: const Color(0xFFF0F1F0),
       ),
       body: Stack(
         children: [
-          // Scrollable content: List of pricing containers (cards)
+          // Main content (scrollable column of pricing containers)
           Positioned.fill(
-            top: 0,
-            bottom: 0,
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -242,7 +239,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Invest in up-trending Smallcap stocks screened through MILARS strategy to generate wealth.",
                       options: littleMastersOptions,
-                      onSelectOption: (selected) => updatePricing(
+                      onSelectOption: (selected) => _updatePricing(
                           selected,
                           "Little Masters",
                           littleMastersOptions.indexOf(selected) + 1),
@@ -255,7 +252,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Generate wealth by riding momentum in Midcap stocks screened through MILARS strategy.",
                       options: emergingMarketLeadersOptions,
-                      onSelectOption: (selected) => updatePricing(
+                      onSelectOption: (selected) => _updatePricing(
                           selected,
                           "Emerging Market Leaders",
                           emergingMarketLeadersOptions.indexOf(selected) + 1),
@@ -268,7 +265,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Achieve stable growth in your portfolio by investing in Bluechip stocks passed through MILARS strategy.",
                       options: largeCapFocusOptions,
-                      onSelectOption: (selected) => updatePricing(
+                      onSelectOption: (selected) => _updatePricing(
                           selected,
                           "Large Cap Focus",
                           largeCapFocusOptions.indexOf(selected) + 1),
@@ -281,7 +278,7 @@ class PricingMobileView extends HookConsumerWidget {
                       description:
                           "Seize opportunities in stocks that are experiencing high volatility and significant movements.",
                       options: stocksOnTheMoveOptions,
-                      onSelectOption: (selected) => updatePricing(
+                      onSelectOption: (selected) => _updatePricing(
                           selected,
                           "Stocks On the Move",
                           stocksOnTheMoveOptions.indexOf(selected) + 1),
@@ -291,10 +288,13 @@ class PricingMobileView extends HookConsumerWidget {
               ),
             ),
           ),
-          // Show the discount message dropdown below the AppBar when a discount is applied
+          // Discount message
           if (discountApplied.value)
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
+              top: 0,
+              left: 0,
+              right: 0,
               child: Container(
                 padding: const EdgeInsets.all(5.0),
                 color: const Color.fromARGB(255, 5, 126, 9),
@@ -309,81 +309,77 @@ class PricingMobileView extends HookConsumerWidget {
                 ),
               ),
             ),
-          // Show total price when more than 1 valid selection
+          // Total price at the bottom
           if (totalPrice.value > 0.0)
             Positioned(
+              bottom: 0,
               left: 0,
               right: 0,
-              bottom: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.0),
-                      topRight: Radius.circular(8.0),
-                    ),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          RichText(
-                            text: TextSpan(
-                              style: const TextStyle(
-                                fontSize: 20,
-                                color: Color.fromARGB(171, 1, 1, 0),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            style: const TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(171, 1, 1, 0),
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text:
+                                    'Rs. ${totalPrice.value.toStringAsFixed(2)}',
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text:
-                                      'Rs. ${totalPrice.value.toStringAsFixed(2)}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                const TextSpan(text: '\n'),
-                                const TextSpan(
-                                    text: 'Inclusive GST',
-                                    style: TextStyle(
-                                        fontSize: 16, color: Colors.black38)),
-                              ],
-                            ),
+                              const TextSpan(text: '\n'),
+                              const TextSpan(
+                                  text: 'Inclusive GST',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black38)),
+                            ],
                           ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Fluttertoast.showToast(
-                                msg: 'Payment Method Coming Soon',
-                                backgroundColor: Colors.blue,
-                                toastLength: Toast.LENGTH_LONG,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIosWeb: 10,
-                                fontSize: 16.0,
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(120, 40),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                backgroundColor: const Color(0xFF18398E)),
-                            child: const Text(
-                              "Proceed for Payment",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
-                            ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Fluttertoast.showToast(
+                              msg: 'Payment Method Coming Soon',
+                              backgroundColor: Colors.blue,
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 10,
+                              fontSize: 16.0,
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(120, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              backgroundColor: const Color(0xFF18398E)),
+                          child: const Text(
+                            "Proceed for Payment",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                  ],
                 ),
               ),
             ),

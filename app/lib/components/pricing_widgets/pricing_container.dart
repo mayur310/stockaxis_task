@@ -40,7 +40,7 @@ class PricingContainer extends StatelessWidget {
                 size: 30,
                 color: Colors.orange,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: 2),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
